@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Hangarin - To-Do Manager{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    {% if user.is_authenticated %}
+    <div class="sidebar">
+        <div style="margin-bottom: 2rem; text-align: center;">
+            <h2 style="font-weight: 700; background: linear-gradient(135deg, #818cf8, #34d399); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">HANGARIN</h2>
+        </div>
+        <nav>
+            <a href="{% url 'dashboard' %}" class="nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+                <i class="fas fa-home" style="width: 20px; margin-right: 10px;"></i> Dashboard
+            </a>
+            <a href="{% url 'task_list' %}" class="nav-link {% if request.resolver_match.url_name == 'task_list' %}active{% endif %}">
+                <i class="fas fa-tasks" style="width: 20px; margin-right: 10px;"></i> My Tasks
+            </a>
+            <a href="{% url 'task_create' %}" class="nav-link">
+                <i class="fas fa-plus-circle" style="width: 20px; margin-right: 10px;"></i> New Task
+            </a>
+            <div style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--glass-border);">
+                <span style="color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase;">Account</span>
+                <p style="margin: 0.5rem 0; font-size: 0.875rem;">{{ user.username }}</p>
+                <form action="{% url 'account_logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="nav-link" style="background: none; border: none; width: 100%; text-align: left; cursor: pointer;">
+                        <i class="fas fa-sign-out-alt" style="width: 20px; margin-right: 10px;"></i> Logout
+                    </button>
+                </form>
+            </div>
+        </nav>
+    </div>
+    <div class="main-content">
+        {% block content %}{% endblock %}
+    </div>
+    {% else %}
+        {% block auth_content %}{% endblock %}
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% load socialaccount %}
+
+{% block title %}Login - Hangarin{% endblock %}
+
+{% block auth_content %}
+<div class="auth-container">
+    <div class="glass-card auth-card">
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <h1
+                style="font-weight: 700; background: linear-gradient(135deg, #818cf8, #34d399); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.5rem;">
+                HANGARIN</h1>
+            <p style="color: var(--text-muted);">Sign in to your account</p>
+        </div>
+
+        <form method="post" action="{% url 'account_login' %}">
+            {% csrf_token %}
+            {% bootstrap_form form exclude='remember' %}
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="remember" id="id_remember">
+                    <label class="form-check-label" for="id_remember">Remember Me</label>
+                </div>
+                <a href="{% url 'account_reset_password' %}"
+                    style="color: var(--primary); font-size: 0.875rem; text-decoration: none;">Forgot password?</a>
+            </div>
+
+            <button type="submit" class="btn-premium" style="width: 100%;">Sign In</button>
+        </form>
+
+        <div style="margin: 1.5rem 0; text-align: center; position: relative;">
+            <hr style="border-color: var(--glass-border);">
+            <span
+                style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: #1e1b4b; padding: 0 10px; font-size: 0.75rem; color: var(--text-muted);">OR
+                CONTINUE WITH</span>
+        </div>
+
+        <div class="social-login">
+            <a href="{% provider_login_url 'google' %}" class="social-btn">
+                <i class="fab fa-google" style="margin-right: 10px; color: #ea4335;"></i> Google
+            </a>
+            <a href="{% provider_login_url 'github' %}" class="social-btn">
+                <i class="fab fa-github" style="margin-right: 10px;"></i> GitHub
+            </a>
+        </div>
+
+        <p style="margin-top: 2rem; text-align: center; font-size: 0.875rem; color: var(--text-muted);">
+            Don't have an account? <a href="{% url 'account_signup' %}"
+                style="color: var(--primary); text-decoration: none; font-weight: 600;">Sign up</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

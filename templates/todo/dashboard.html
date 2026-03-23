@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard - Hangarin{% endblock %}
+{% block content %}
+<div style="margin-bottom: 2rem;">
+    <h1 style="font-size: 1.875rem; font-weight: 700; margin-bottom: 0.5rem;">Dashboard Overview</h1>
+    <p style="color: var(--text-muted);">Welcome back! Here is a summary of your tasks.</p>
+</div>
+
+<div class="stats-grid">
+    <div class="glass-card stat-card">
+        <h3>Total Tasks</h3>
+        <div class="value">{{ total_tasks }}</div>
+        <div style="margin-top: 0.5rem; font-size: 0.875rem; color: var(--primary);">+5% from last month</div>
+    </div>
+    <div class="glass-card stat-card">
+        <h3>Completed</h3>
+        <div class="value" style="color: var(--accent);">{{ completed_tasks }}</div>
+        <div style="margin-top: 0.5rem; font-size: 0.875rem; color: var(--text-muted);">Great job!</div>
+    </div>
+    <div class="glass-card stat-card">
+        <h3>Pending</h3>
+        <div class="value" style="color: var(--warning);">{{ pending_tasks }}</div>
+        <div style="margin-top: 0.5rem; font-size: 0.875rem; color: var(--text-muted);">Stay focused</div>
+    </div>
+    <div class="glass-card stat-card">
+        <h3>Created This Year</h3>
+        <div class="value">{{ tasks_this_year }}</div>
+        <div style="margin-top: 0.5rem; font-size: 0.875rem; color: var(--text-muted);">Year 2024</div>
+    </div>
+</div>
+
+<div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem;">
+    <div class="glass-card">
+        <h3 style="margin-bottom: 1.5rem;">Recent Tasks</h3>
+        <table class="task-table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>Deadline</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in recent_tasks %}
+                <tr>
+                    <td>{{ task.title }}</td>
+                    <td>
+                        <span
+                            class="badge {% if task.status == 'Pending' %}badge-pending{% elif task.status == 'In Progress' %}badge-progress{% else %}badge-completed{% endif %}">
+                            {{ task.status }}
+                        </span>
+                    </td>
+                    <td style="color: var(--text-muted); font-size: 0.875rem;">{{ task.deadline|date:"M d, Y" }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3" style="text-align: center; color: var(--text-muted);">No recent tasks.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div style="margin-top: 1.5rem; text-align: center;">
+            <a href="{% url 'task_list' %}" style="color: var(--primary); font-weight: 600; text-decoration: none;">View
+                all tasks <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <div class="glass-card">
+        <h3 style="margin-bottom: 1.5rem;">Quick Actions</h3>
+        <a href="{% url 'task_create' %}" class="btn-premium"
+            style="display: block; text-align: center; text-decoration: none; margin-bottom: 1rem;">
+            <i class="fas fa-plus"></i> Create New Task
+        </a>
+        <div style="background: rgba(255, 255, 255, 0.03); border-radius: 0.5rem; padding: 1rem; margin-top: 1rem;">
+            <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 0;">Efficiency is key. Break down
+                your goals and conquer your day!</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

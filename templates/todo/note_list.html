@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}Notes - Hangarin{% endblock %}
+{% block content %}
+<div style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: flex-end;">
+    <div>
+        <h1 style="font-size: 1.875rem; font-weight: 700; margin-bottom: 0.5rem;">Notes</h1>
+        <p style="color: var(--text-muted);">Manage your task notes.</p>
+    </div>
+    <a href="{% url 'note_create' %}" class="btn-premium"><i class="fas fa-plus"></i> New Note</a>
+</div>
+
+<div class="glass-card" style="padding: 0;">
+    <table class="task-table" style="margin: 0; width: 100%;">
+        <thead>
+            <tr style="background: transparent;">
+                <th>Note snippet</th>
+                <th>Task</th>
+                <th style="text-align: right;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for note in notes %}
+            <tr>
+                <td style="font-weight: 500;">{{ note.content|truncatechars:100 }}</td>
+                <td style="color: var(--text-muted);">{{ note.task.title }}</td>
+                <td style="text-align: right;">
+                    <div style="display: flex; gap: 0.75rem; justify-content: flex-end;">
+                        <a href="{% url 'note_update' note.pk %}"
+                            style="color: var(--text-muted); transition: color 0.2s;"><i class="fas fa-edit"></i></a>
+                        <a href="{% url 'note_delete' note.pk %}"
+                            style="color: var(--danger); transition: opacity 0.2s;"><i class="fas fa-trash"></i></a>
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3" style="text-align: center; padding: 3rem; color: var(--text-muted);">No notes found.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

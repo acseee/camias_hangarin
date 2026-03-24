@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}Priorities - Hangarin{% endblock %}
+{% block content %}
+<div style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: flex-end;">
+    <div>
+        <h1 style="font-size: 1.875rem; font-weight: 700; margin-bottom: 0.5rem;">Priorities</h1>
+        <p style="color: var(--text-muted);">Manage your task priorities.</p>
+    </div>
+    <a href="{% url 'priority_create' %}" class="btn-premium"><i class="fas fa-plus"></i> New Priority</a>
+</div>
+
+<div class="glass-card" style="padding: 0;">
+    <table class="task-table" style="margin: 0; width: 100%;">
+        <thead>
+            <tr style="background: transparent;">
+                <th>Status Name</th>
+                <th style="text-align: right;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for priority in priorities %}
+            <tr>
+                <td style="font-weight: 500;">
+                    <span style="font-size: 0.875rem; 
+                        {% if priority.status == 'Critical' or priority.status == 'High' %}color: var(--danger);
+                        {% elif priority.status == 'Medium' %}color: var(--warning);
+                        {% else %}color: var(--accent);{% endif %}">
+                        <i class="fas fa-circle" style="font-size: 0.6rem; margin-right: 5px;"></i> {{ priority.status
+                        }}
+                    </span>
+                </td>
+                <td style="text-align: right;">
+                    <div style="display: flex; gap: 0.75rem; justify-content: flex-end;">
+                        <a href="{% url 'priority_update' priority.pk %}"
+                            style="color: var(--text-muted); transition: color 0.2s;"><i class="fas fa-edit"></i></a>
+                        <a href="{% url 'priority_delete' priority.pk %}"
+                            style="color: var(--danger); transition: opacity 0.2s;"><i class="fas fa-trash"></i></a>
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="2" style="text-align: center; padding: 3rem; color: var(--text-muted);">No priorities
+                    found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% block title %}{% if object %}Edit Priority{% else %}New Priority{% endif %} - Hangarin{% endblock %}
+{% block content %}
+<div style="max-width: 600px; margin: 0 auto;">
+    <div style="margin-bottom: 2rem;">
+        <h1 style="font-size: 1.875rem; font-weight: 700; margin-bottom: 0.5rem;">{% if object %}Edit Priority{% else
+            %}Create New Priority{% endif %}</h1>
+        <p style="color: var(--text-muted);">Fill in the details.</p>
+    </div>
+    <div class="glass-card">
+        <form method="post">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <div style="margin-top: 2rem; display: flex; gap: 1rem;">
+                <button type="submit" class="btn-premium">Save</button>
+                <a href="{% url 'priority_list' %}"
+                    style="padding: 0.75rem 1.5rem; text-decoration: none; color: var(--text-muted); border: 1px solid var(--glass-border); border-radius: 0.5rem;">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

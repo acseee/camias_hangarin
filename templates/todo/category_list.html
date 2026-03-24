@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}Categories - Hangarin{% endblock %}
+{% block content %}
+<div style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: flex-end;">
+    <div>
+        <h1 style="font-size: 1.875rem; font-weight: 700; margin-bottom: 0.5rem;">Categories</h1>
+        <p style="color: var(--text-muted);">Manage your task categories.</p>
+    </div>
+    <a href="{% url 'category_create' %}" class="btn-premium"><i class="fas fa-plus"></i> New Category</a>
+</div>
+
+<div class="glass-card" style="padding: 0;">
+    <table class="task-table" style="margin: 0; width: 100%;">
+        <thead>
+            <tr style="background: transparent;">
+                <th>Category Name</th>
+                <th style="text-align: right;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for category in categories %}
+            <tr>
+                <td style="font-weight: 500;">{{ category.name }}</td>
+                <td style="text-align: right;">
+                    <div style="display: flex; gap: 0.75rem; justify-content: flex-end;">
+                        <a href="{% url 'category_update' category.pk %}"
+                            style="color: var(--text-muted); transition: color 0.2s;"><i class="fas fa-edit"></i></a>
+                        <a href="{% url 'category_delete' category.pk %}"
+                            style="color: var(--danger); transition: opacity 0.2s;"><i class="fas fa-trash"></i></a>
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="2" style="text-align: center; padding: 3rem; color: var(--text-muted);">No categories
+                    found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -16,6 +16,15 @@
 </head>
 
 <body>
+    <header class="mobile-header">
+        <h2
+            style="font-size: 1.25rem; font-weight: 700; margin: 0; background: linear-gradient(135deg, #818cf8, #34d399); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">
+            HANGARIN</h2>
+        {% if user.is_authenticated %}
+        <div style="font-size: 0.875rem; color: var(--text-muted);">{{ user.username }}</div>
+        {% endif %}
+    </header>
+
     {% if user.is_authenticated %}
     <div class="sidebar">
         <div style="margin-bottom: 2rem; text-align: center;">
@@ -64,7 +73,35 @@
         {% block content %}{% endblock %}
     </div>
     {% else %}
-    {% block auth_content %}{% endblock %}
+        {% block auth_content %}{% endblock %}
+    {% endif %}
+
+    {% if user.is_authenticated %}
+    <nav class="bottom-nav">
+        <a href="{% url 'dashboard' %}"
+            class="bottom-nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="{% url 'task_list' %}"
+            class="bottom-nav-link {% if request.resolver_match.url_name == 'task_list' %}active{% endif %}">
+            <i class="fas fa-tasks"></i>
+            <span>Tasks</span>
+        </a>
+        <a href="{% url 'task_create' %}" class="bottom-nav-link">
+            <i class="fas fa-plus-circle" style="font-size: 1.5rem; color: var(--primary);"></i>
+            <span>Add</span>
+        </a>
+        <a href="{% url 'category_list' %}"
+            class="bottom-nav-link {% if 'category' in request.resolver_match.url_name %}active{% endif %}">
+            <i class="fas fa-folder"></i>
+            <span>Folders</span>
+        </a>
+        <a href="{% url 'account_logout' %}" class="bottom-nav-link">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Exit</span>
+        </a>
+    </nav>
     {% endif %}
 </body>
 

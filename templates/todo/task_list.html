@@ -61,8 +61,7 @@
                         {% if task.priority.status == 'Critical' or task.priority.status == 'High' %}color: var(--danger);
                         {% elif task.priority.status == 'Medium' %}color: var(--warning);
                         {% else %}color: var(--accent);{% endif %}">
-                        <i class="fas fa-circle" style="font-size: 0.6rem; margin-right: 5px;"></i> {{
-                        task.priority.status }}
+                        <i class="fas fa-circle" style="font-size: 0.6rem; margin-right: 5px;"></i> {{ task.priority.status }}
                     </span>
                 </td>
                 <td>

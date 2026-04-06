@@ -30,6 +30,11 @@ self.addEventListener('activate', event => {
 
 // Serve from cache
 self.addEventListener("fetch", event => {
+    // Skip cross-origin and non-GET requests entirely
+    if (event.request.method !== "GET") {
+        return; // Let the browser handle POST/login natively
+    }
+
     event.respondWith(
         caches.match(event.request)
             .then(response => {

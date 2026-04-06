@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Offline - Hangarin{% endblock %}
+{% block content %}
+<div style="text-align: center; padding: 4rem 2rem;">
+    <div style="font-size: 4rem; color: var(--primary); margin-bottom: 2rem;">
+        <i class="fas fa-wifi-slash"></i>
+    </div>
+    <h1 style="font-size: 2rem; font-weight: 700; margin-bottom: 1rem;">You are Offline</h1>
+    <p style="color: var(--text-muted); max-width: 500px; margin: 0 auto 2rem;">
+        Hangarin needs an internet connection to sync your tasks. Please check your network and try again.
+    </p>
+    <a href="/" class="btn-premium" style="display: inline-block; text-decoration: none;">
+        <i class="fas fa-sync"></i> Try Again
+    </a>
+</div>
+{% endblock %}

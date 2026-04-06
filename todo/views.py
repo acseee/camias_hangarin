@@ -158,3 +158,6 @@ class NoteDeleteView(LoginRequiredMixin, DeleteView):
     model = Note
     template_name = 'todo/note_confirm_delete.html'
     success_url = reverse_lazy('note_list')
+
+class OfflineView(TemplateView):
+    template_name = 'todo/offline.html'

@@ -1,7 +1,8 @@
 var staticCacheName = "django-pwa-v" + new Date().getTime();
 var filesToCache = [
-    '/',
+    '/offline/',
     '/static/css/style.css',
+    '/static/img/icon-192.png',
 ];
 
 // Cache on install
@@ -31,26 +32,27 @@ self.addEventListener('activate', event => {
 
 // Serve from cache
 self.addEventListener("fetch", event => {
-    // Skip non-GET requests entirely (like POST logins)
+    // Skip non-GET requests entirely 
     if (event.request.method !== "GET") {
         return; 
     }
 
+    // Network-First Strategy for HTML/Navigation
+    if (event.request.mode === 'navigate') {
+        event.respondWith(
+            fetch(event.request)
+                .catch(() => {
+                    return caches.match('/offline/');
+                })
+        );
+        return;
+    }
+
+    // Cache-First Strategy for static assets
     event.respondWith(
         caches.match(event.request)
             .then(response => {
-                // If it's in the cache, return it
-                if (response) {
-                    return response;
-                }
-                // Otherwise, try to fetch from network
-                return fetch(event.request).catch(() => {
-                    // Final offline fallback: if it's the root page, try to return it from cache
-                    if (event.request.mode === 'navigate') {
-                        return caches.match('/');
-                    }
-                    return null;
-                });
+                return response || fetch(event.request);
             })
     )
 });

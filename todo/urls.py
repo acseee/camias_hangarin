@@ -26,4 +26,5 @@ urlpatterns = [
     path('notes/create/', views.NoteCreateView.as_view(), name='note_create'),
     path('notes/<int:pk>/update/', views.NoteUpdateView.as_view(), name='note_update'),
     path('notes/<int:pk>/delete/', views.NoteDeleteView.as_view(), name='note_delete'),
+    path('offline/', views.OfflineView.as_view(), name='offline'),
 ]

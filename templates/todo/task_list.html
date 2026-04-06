@@ -44,10 +44,10 @@
         <thead>
             <tr style="background: transparent;">
                 <th>Task Title</th>
-                <th>Category</th>
-                <th>Priority</th>
+                <th class="mobile-hide">Category</th>
+                <th class="mobile-hide">Priority</th>
                 <th>Status</th>
-                <th>Due Date</th>
+                <th class="mobile-hide">Due Date</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -55,12 +55,9 @@
             {% for task in tasks %}
             <tr>
                 <td style="font-weight: 500;">{{ task.title }}</td>
-                <td><span style="color: var(--text-muted);">{{ task.category.name }}</span></td>
-                <td>
-                    <span style="font-size: 0.875rem; 
-                        {% if task.priority.status == 'Critical' or task.priority.status == 'High' %}color: var(--danger);
-                        {% elif task.priority.status == 'Medium' %}color: var(--warning);
-                        {% else %}color: var(--accent);{% endif %}">
+                <td class="mobile-hide"><span style="color: var(--text-muted);">{{ task.category.name }}</span></td>
+                <td class="mobile-hide">
+                    <span class="priority-text priority-{{ task.priority.status|lower }}">
                         <i class="fas fa-circle" style="font-size: 0.6rem; margin-right: 5px;"></i> {{ task.priority.status }}
                     </span>
                 </td>
@@ -70,7 +67,7 @@
                         {{ task.status }}
                     </span>
                 </td>
-                <td style="color: var(--text-muted); font-size: 0.875rem;">{{ task.deadline|date:"M d, Y" }}</td>
+                <td class="mobile-hide" style="color: var(--text-muted); font-size: 0.875rem;">{{ task.deadline|date:"M d, Y" }}</td>
                 <td>
                     <div style="display: flex; gap: 0.75rem;">
                         <a href="{% url 'task_update' task.pk %}"

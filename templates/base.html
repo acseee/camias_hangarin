@@ -77,6 +77,28 @@
     {% endif %}
 
     {% if user.is_authenticated %}
+    <!-- Mobile Drawer Logic -->
+    <input type="checkbox" id="drawer-toggle" class="drawer-toggle">
+    <label for="drawer-toggle" class="drawer-overlay"></label>
+    <div class="drawer-content">
+        <div class="drawer-header">
+            <h2 style="font-size: 1.5rem; color: var(--text-main); margin: 0;">More Actions</h2>
+            <p style="font-size: 0.875rem; color: var(--text-muted); margin-top: 0.5rem;">Access all your task tools below.</p>
+        </div>
+        <a href="{% url 'dashboard' %}" class="drawer-nav-link"><i class="fas fa-home"></i> Dashboard</a>
+        <a href="{% url 'task_list' %}" class="drawer-nav-link"><i class="fas fa-tasks"></i> My Tasks</a>
+        <a href="{% url 'category_list' %}" class="drawer-nav-link"><i class="fas fa-folder"></i> Categories</a>
+        <a href="{% url 'priority_list' %}" class="drawer-nav-link"><i class="fas fa-flag"></i> Priorities</a>
+        <a href="{% url 'subtask_list' %}" class="drawer-nav-link"><i class="fas fa-list-ul"></i> Subtasks</a>
+        <a href="{% url 'note_list' %}" class="drawer-nav-link"><i class="fas fa-sticky-note"></i> Notes</a>
+        <a href="{% url 'account_logout' %}" class="drawer-nav-link" style="color: var(--danger);"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        
+        <label for="drawer-toggle" class="btn-premium" style="display: block; text-align: center; margin-top: 2rem; cursor: pointer;">
+            Close Menu
+        </label>
+    </div>
+
+    <!-- Bottom Navigation Bar -->
     <nav class="bottom-nav">
         <a href="{% url 'dashboard' %}"
             class="bottom-nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
@@ -95,12 +117,12 @@
         <a href="{% url 'category_list' %}"
             class="bottom-nav-link {% if 'category' in request.resolver_match.url_name %}active{% endif %}">
             <i class="fas fa-folder"></i>
-            <span>Folders</span>
+            <span>Categories</span>
         </a>
-        <a href="{% url 'account_logout' %}" class="bottom-nav-link">
-            <i class="fas fa-sign-out-alt"></i>
-            <span>Exit</span>
-        </a>
+        <label for="drawer-toggle" class="bottom-nav-link">
+            <i class="fas fa-ellipsis-h"></i>
+            <span>More</span>
+        </label>
     </nav>
     {% endif %}
 </body>

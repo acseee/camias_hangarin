@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Hangarin - To-Do Manager{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=1.0.1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     {% progressive_web_app_meta %}
@@ -85,13 +85,13 @@
             <h2 style="font-size: 1.5rem; color: var(--text-main); margin: 0;">More Actions</h2>
             <p style="font-size: 0.875rem; color: var(--text-muted); margin-top: 0.5rem;">Access all your task tools below.</p>
         </div>
-        <a href="{% url 'dashboard' %}" class="drawer-nav-link"><i class="fas fa-home"></i> Dashboard</a>
-        <a href="{% url 'task_list' %}" class="drawer-nav-link"><i class="fas fa-tasks"></i> My Tasks</a>
-        <a href="{% url 'category_list' %}" class="drawer-nav-link"><i class="fas fa-folder"></i> Categories</a>
+        <a href="{% url 'dashboard' %}" class="drawer-nav-link"><i class="fas fa-chart-line"></i> Dashboard</a>
+        <a href="{% url 'task_list' %}" class="drawer-nav-link"><i class="fas fa-list-check"></i> My Tasks</a>
+        <a href="{% url 'category_list' %}" class="drawer-nav-link"><i class="fas fa-tags"></i> Categories</a>
         <a href="{% url 'priority_list' %}" class="drawer-nav-link"><i class="fas fa-flag"></i> Priorities</a>
-        <a href="{% url 'subtask_list' %}" class="drawer-nav-link"><i class="fas fa-list-ul"></i> Subtasks</a>
+        <a href="{% url 'subtask_list' %}" class="drawer-nav-link"><i class="fas fa-sitemap"></i> Subtasks</a>
         <a href="{% url 'note_list' %}" class="drawer-nav-link"><i class="fas fa-sticky-note"></i> Notes</a>
-        <a href="{% url 'account_logout' %}" class="drawer-nav-link" style="color: var(--danger);"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        <a href="{% url 'account_logout' %}" class="drawer-nav-link" style="color: #ff4d4d; border-bottom: none;"><i class="fas fa-sign-out-alt"></i> Logout</a>
         
         <label for="drawer-toggle" class="btn-premium" style="display: block; text-align: center; margin-top: 2rem; cursor: pointer;">
             Close Menu

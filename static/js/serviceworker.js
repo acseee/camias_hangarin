@@ -6,7 +6,7 @@ var filesToCache = [
 
 // Cache on install
 self.addEventListener("install", event => {
-    this.skipWaiting();
+    self.skipWaiting();
     event.waitUntil(
         caches.open(staticCacheName)
             .then(cache => {
@@ -15,8 +15,9 @@ self.addEventListener("install", event => {
     )
 });
 
-// Clear old caches
+// Take control of all pages immediately 
 self.addEventListener('activate', event => {
+    event.waitUntil(self.clients.claim());
     event.waitUntil(
         caches.keys().then(cacheNames => {
             return Promise.all(
@@ -30,18 +31,26 @@ self.addEventListener('activate', event => {
 
 // Serve from cache
 self.addEventListener("fetch", event => {
-    // Skip cross-origin and non-GET requests entirely
+    // Skip non-GET requests entirely (like POST logins)
     if (event.request.method !== "GET") {
-        return; // Let the browser handle POST/login natively
+        return; 
     }
 
     event.respondWith(
         caches.match(event.request)
             .then(response => {
-                return response || fetch(event.request);
-            })
-            .catch(() => {
-                return caches.match('/');
+                // If it's in the cache, return it
+                if (response) {
+                    return response;
+                }
+                // Otherwise, try to fetch from network
+                return fetch(event.request).catch(() => {
+                    // Final offline fallback: if it's the root page, try to return it from cache
+                    if (event.request.mode === 'navigate') {
+                        return caches.match('/');
+                    }
+                    return null;
+                });
             })
     )
 });

@@ -37,6 +37,7 @@ body {
     box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
 }
 
+/* Desktop Base Layout */
 .sidebar {
     width: 260px;
     height: 100vh;
@@ -54,28 +55,6 @@ body {
     min-height: 100vh;
 }
 
-/* Mobile Responsive Adjustments */
-@media (max-width: 768px) {
-    .sidebar {
-        display: none;
-    }
-
-    .main-content {
-        margin-left: 0;
-        padding: 1.5rem;
-        padding-bottom: 5rem; /* Space for bottom nav */
-    }
-
-    .stats-grid {
-        grid-template-columns: 1fr 1fr !important;
-        gap: 1rem !important;
-    }
-
-    .dashboard-grid {
-        grid-template-columns: 1fr !important;
-        gap: 1.5rem !important;
-    }
-}
 
 /* Mobile Navigation Bar */
 .bottom-nav {
@@ -93,11 +72,6 @@ body {
     z-index: 1000;
 }
 
-@media (max-width: 768px) {
-    .bottom-nav {
-        display: flex;
-    }
-}
 
 .bottom-nav-link {
     display: flex;
@@ -127,11 +101,6 @@ body {
     border-bottom: 1px solid var(--glass-border);
 }
 
-@media (max-width: 768px) {
-    .mobile-header {
-        display: flex;
-    }
-}
 
 .nav-link {
     display: flex;
@@ -409,4 +378,49 @@ body::before {
     color: var(--text-muted);
     font-size: 0.875rem;
     cursor: pointer;
+}
+
+/* Mobile Overrides - Placed at the end for maximum precedence */
+@media (max-width: 768px) {
+    .sidebar {
+        display: none !important;
+    }
+
+    .main-content {
+        margin-left: 0 !important;
+        padding: 1rem !important;
+        padding-bottom: 5rem !important;
+    }
+
+    .mobile-header {
+        display: flex !important;
+    }
+
+    .bottom-nav {
+        display: flex !important;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 0.75rem !important;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem !important;
+    }
+
+    /* Table Fixes for Mobile */
+    .task-table th:nth-child(3), 
+    .task-table td:nth-child(3) {
+        display: none; /* Hide deadline on very small screens to save space */
+    }
+
+    .glass-card {
+        padding: 1rem !important;
+    }
+
+    .stat-card .value {
+        font-size: 1.5rem !important;
+    }
 }
